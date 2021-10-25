@@ -46,6 +46,7 @@ app.get("/", (req, res) => {
   res.send("Welcome to Justify server");
 });
 
-app.listen(3000, (req, res) => {
-  console.log("Justify is listening on port 3000");
+const port = process.env.PORT || 3000;
+app.listen(port, (req, res) => {
+  console.log(`Justify is listening on port ${port}`);
 });
