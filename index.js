@@ -17,7 +17,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Set up session management using MongoDB Atlas as memory store
-// const mongoose = require("mongoose");
+const mongoose = require("mongoose");
+// Connect to MongoDB Atlas
+mongoose
+  .connect(process.env.MONGO_CONNECTION)
+  .then(() => console.log("Successful - Connection to MongoDB Atlas"))
+  .catch(() => console.log("Error - Connection to MongoDB Atlas"));
+
 const session = require("express-session");
 const mgSessionStore = require("connect-mongo");
 
@@ -45,6 +51,9 @@ app.use(
 app.get("/", (req, res) => {
   res.send("Welcome to Justify server");
 });
+
+const api = require("./routes/api");
+app.use("/api", api);
 
 const port = process.env.PORT || 3000;
 app.listen(port, (req, res) => {
