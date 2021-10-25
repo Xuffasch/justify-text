@@ -16,7 +16,7 @@
         "tool"
     ],
     "author": "Tristan LUCAS",
-    "license": "ISC",
+    "license": "MIT",
     "dependencies": {
         "body-parser": "^1.19.0",
         "connect-mongo": "^4.6.0",
