@@ -10,9 +10,11 @@ exports.getToken = function (req, res) {
       res
         .status(500)
         .send({ err: err, message: "Error while searching for user" });
+      return;
     }
     if (!user) {
       res.status(404).send({ err: err, message: "User is not found" });
+      return;
     } else {
       const token = jwt.sign(
         {
@@ -37,6 +39,7 @@ exports.getToken = function (req, res) {
 exports.justify = function (req, res) {
   if (!req.email) {
     res.status(403).send({ message: "Unauthorized !" });
+    return;
   }
 
   // Get all the words after cleaning up space characters and loose empty strings;
@@ -47,6 +50,7 @@ exports.justify = function (req, res) {
 
   if (req.session && req.session.usage + words.length > 1000) {
     res.status(403).send("Payment required - Daily usage limit reached ");
+    return;
   }
 
   let output = eightyChar(req.body);

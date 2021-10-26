@@ -7,11 +7,13 @@ const verifyToken = (req, res, next) => {
       message:
         "Please provide a correct accessToken in the request header 'x-access-token'",
     });
+    return;
   }
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
       res.status(401).send({ message: "Unauthorized" });
+      return;
     }
     req.email = decoded.email;
     next();
