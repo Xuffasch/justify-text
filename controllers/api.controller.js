@@ -44,12 +44,14 @@ exports.justify = function (req, res) {
   }
 
   // Get all the words after cleaning up space characters and loose empty strings;
-  let words = req.body
+  const words = req.body
     .replace(/n/g, "")
     .split(" ")
     .filter((w) => w != "");
 
-  if (req.session && req.session.usage + words.length > 1000) {
+  const quota = process.env.ENVIRONMENT == "PRODUCTION" ? 80000 : 1000;
+
+  if (req.session && req.session.usage + words.length > quota) {
     res.status(402).send("Payment required - Daily usage limit reached ");
     return;
   }
