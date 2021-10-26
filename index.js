@@ -36,7 +36,7 @@ app.use(
     secret: "secretToProtectJustify",
     cookie: {
       httpOnly: true,
-      secure: false,
+      secure: process.env.ENVIRONMENT == "PRODUCTION" ? true : false,
       sameSite: false,
       maxAge:
         process.env.ENVIRONMENT == "PRODUCTION"
