@@ -12,7 +12,9 @@ const verifyToken = (req, res, next) => {
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
-      res.status(401).send({ message: "Unauthorized" });
+      res
+        .status(401)
+        .send({ message: "Unauthorized or your accessToken may have expired" });
       return;
     }
     req.email = decoded.email;

@@ -6,7 +6,6 @@ const eightyChar = require("../services/eighty.js");
 exports.getToken = function (req, res) {
   User.findOne({ email: req.body.email }, (err, user) => {
     if (err) {
-      console.log("Error while looking for user : ", err);
       res
         .status(500)
         .send({ err: err, message: "Error while searching for user" });
@@ -38,7 +37,9 @@ exports.getToken = function (req, res) {
 
 exports.justify = function (req, res) {
   if (!req.email) {
-    res.status(403).send({ message: "Unauthorized !" });
+    res
+      .status(403)
+      .send({ message: "Unauthorized - Unknown user, please authenticate." });
     return;
   }
 
@@ -49,7 +50,7 @@ exports.justify = function (req, res) {
     .filter((w) => w != "");
 
   if (req.session && req.session.usage + words.length > 1000) {
-    res.status(403).send("Payment required - Daily usage limit reached ");
+    res.status(402).send("Payment required - Daily usage limit reached ");
     return;
   }
 
